@@ -268,7 +268,6 @@ def user_stats(df,city,month,day,column_names):
         earliest, most recent, and most common year of birth
     """
 
-    
     full_count = df['User Type'].count()
     print('\nCalculating User Statistics in {}...\n Filters: Month = {}, Day = {}\n  Full count = {}\n'.format(city.title(), month.title(), day.title(),full_count))
     start_time = time.time()
@@ -328,11 +327,14 @@ def main():
         df_raw = pd.read_csv(CITY_DATA[city])
         while True:
             raw = input('\nWould you like to see 5 lines of raw data? Enter yes or no.\n')
-            if raw.lower() != 'yes':
+            if raw.lower() == 'no':
                 break
-            else:
+            elif raw.lower() == 'yes':
                 print(df_raw[i:i+5])
-            i += 5
+                i += 5
+            else:
+                print('\nThat is not a valid option! Please try again.\n')   
+        
         i = 0
         while True:
             raw = input('\nWould you like to see 5 lines of filtered data? Enter yes or no.\n')
@@ -341,8 +343,17 @@ def main():
             elif raw.lower() == 'yes':             
                 print(df[i:i+5])
                 i += 5
-        restart = input('\nWould you like to restart? Enter yes or no.\n')
-        if restart.lower() != 'yes':
+            else:
+                print('\nThat is not a valid option! Please try again.\n')   
+        
+        while True:
+            restart = input('\nWould you like to restart? Enter yes or no.\n')
+            if restart.lower() == 'yes' or restart.lower() == 'no':
+                break
+            else:
+                print('\nThat is not a valid option! Please try again.\n')
+        
+        if restart.lower() == 'no' :
             break
 
 if __name__ == "__main__":
