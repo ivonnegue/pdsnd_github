@@ -300,6 +300,30 @@ def user_stats(df,city,month,day,column_names):
     print("\nThis calculation took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+def print_raw_data(df, city):
+        df_raw = pd.read_csv(CITY_DATA[city])
+        i = 0
+        while True:
+            raw = input('\nWould you like to see 5 lines of raw data? Enter yes or no.\n')
+            if raw.lower() == 'no':
+                break
+            elif raw.lower() == 'yes':
+                print(df_raw[i:i+5])
+                i += 5
+            else:
+                print('\nThat is not a valid option! Please try again.\n')   
+        
+        i = 0
+        while True:
+            raw = input('\nWould you like to see 5 lines of filtered data? Enter yes or no.\n')
+            if raw.lower() == 'no':
+                break
+            elif raw.lower() == 'yes':             
+                print(df[i:i+5])
+                i += 5
+            else:
+                print('\nThat is not a valid option! Please try again.\n')   
+    
 
 def main():
     while True:
@@ -323,29 +347,9 @@ def main():
             user_stats(df,city,month,day,column_names) #Columns required: User Type, Gender and Birth Year
         else:
             print('\n There are no data of trips in {} that took place on {} - {}.\n'.format(city.title(), day.title(), month.title()))
-        i = 0
-        df_raw = pd.read_csv(CITY_DATA[city])
-        while True:
-            raw = input('\nWould you like to see 5 lines of raw data? Enter yes or no.\n')
-            if raw.lower() == 'no':
-                break
-            elif raw.lower() == 'yes':
-                print(df_raw[i:i+5])
-                i += 5
-            else:
-                print('\nThat is not a valid option! Please try again.\n')   
-        
-        i = 0
-        while True:
-            raw = input('\nWould you like to see 5 lines of filtered data? Enter yes or no.\n')
-            if raw.lower() == 'no':
-                break
-            elif raw.lower() == 'yes':             
-                print(df[i:i+5])
-                i += 5
-            else:
-                print('\nThat is not a valid option! Please try again.\n')   
-        
+ 
+        print_raw_data(df,city)   
+
         while True:
             restart = input('\nWould you like to restart? Enter yes or no.\n')
             if restart.lower() == 'yes' or restart.lower() == 'no':
