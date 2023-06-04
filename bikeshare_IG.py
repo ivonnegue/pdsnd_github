@@ -112,9 +112,23 @@ def load_data(city, month, weekday):
 
 
 def time_stats(df,city,month,day):
-    ###Displays statistics on the most frequent times of travel.###
-    ###Columns required: Start Time
-    ###Columns created: hour.
+    """
+    Displays statistics on the most frequent times of travel for the specified city, month and day if applicable.
+
+    Args:
+        df - Pandas DataFrame containing city data filtered by month and day.
+             Columns required: Start Time
+             Columns created: hour.
+        (str) city - name of the city to analyze
+        (str) month - name of the month to filter by, or "all" to apply no month filter
+        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+    Returns:
+        -
+    Prints:
+        most common day
+        most common month
+        most common start hour
+    """
 
     full_count = df['Start Time'].count()
     print('\nCalculating The Most Frequent Times of Travel in {}...\n Filters: Month = {}, Day = {}\n Full count = {}\n'.format(city.title(), month.title(), day.title(), full_count) )
@@ -156,9 +170,24 @@ def time_stats(df,city,month,day):
 
 
 def station_stats(df,city,month,day):
-    ###Displays statistics on the most popular stations and trip.###
-    ###Columns required: Start Station, End Station
-    ###Columns created: trip.
+    """
+    Displays statistics on the most popular stations and trip for the specified city, month and day if applicable.
+
+    Args:
+        df - Pandas DataFrame containing city data filtered by month and day.
+             Columns required: Start Time
+             Columns created: hour.
+        (str) city - name of the city to analyze
+        (str) month - name of the month to filter by, or "all" to apply no month filter
+        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+    Returns:
+        -
+    Prints:
+        most common start station
+        most common end station
+        most common combinationn of start and end stations trip
+    """
+
     full_count = df['Start Station'].count()
     print('\nCalculating The Most Popular Stations and Trip in {}...\n Filters: Month = {}, Day = {}\n Full count = {}\n'.format(city.title(), month.title(), day.title(),full_count) )
     start_time = time.time()
@@ -183,9 +212,23 @@ def station_stats(df,city,month,day):
 
 
 def trip_duration_stats(df,city,month,day):
-    ###Displays statistics on the total and average trip duration.###
-    ###Columns required: Start time, End Time
-    ###Columns created: travel time.
+    """
+    Displays statistics on the total and average trip duration for the specified city, month and day if applicable.
+
+    Args:
+        df - Pandas DataFrame containing city data filtered by month and day.
+             Columns required: Start time, End Time
+             Columns created: travel time.
+        (str) city - name of the city to analyze
+        (str) month - name of the month to filter by, or "all" to apply no month filter
+        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+    Returns:
+        -
+    Prints:
+        total travel time
+        mean travel time
+    """
+
     full_count = df['Start Time'].count()
     print('\nCalculating Trip Duration in {}...\n Filters: Month = {}, Day = {}\n Full count = {}\n'.format(city.title(), month.title(), day.title(),full_count))
     start_time = time.time()
@@ -207,8 +250,25 @@ def trip_duration_stats(df,city,month,day):
 
 
 def user_stats(df,city,month,day,column_names):
-    ###Displays statistics on bikeshare users.###
-    ###Columns required: User Type, Gender and Birth Year
+    """
+    Displays statistics on bikeshare users for the specified city, month and day if applicable.
+
+    Args:
+        df - Pandas DataFrame containing city data filtered by month and day.
+             Columns required: User Type, Gender and Birth Year
+             Columns created: -
+        (str) city - name of the city to analyze
+        (str) month - name of the month to filter by, or "all" to apply no month filter
+        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+    Returns:
+        -
+    Prints:
+        counts of user types
+        count by users
+        earliest, most recent, and most common year of birth
+    """
+
+    
     full_count = df['User Type'].count()
     print('\nCalculating User Statistics in {}...\n Filters: Month = {}, Day = {}\n  Full count = {}\n'.format(city.title(), month.title(), day.title(),full_count))
     start_time = time.time()
