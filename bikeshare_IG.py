@@ -39,8 +39,8 @@ def get_filters():
     # get user input for month (all, january, february, ... , june)
     while True:
         try:        
-            month_number =  int(input('Enter the number corresponding to the month (1-12) to filter by, or 0 to apply no month filter: '))
-            if month_number <= 12:
+            month_number =  int(input('Enter the number corresponding to the month (1-6) to filter by, or 0 to apply no month filter: '))
+            if month_number <= 6:
                 if month_number > 0:
                     month = months[month_number -1]
                 else:
