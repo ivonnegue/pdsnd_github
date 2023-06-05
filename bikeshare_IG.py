@@ -160,12 +160,12 @@ def time_stats(df,city,month,day):
     df['hour'] = df['Start Time'].dt.hour
     # find the most common hour (from 0 to 23)
     popular_hour = df['hour'].mode()[0]
-    count_popular_hour = df.groupby(['hour'])['hour'].count()[popular_hour]
+    count_popular_hour = round(df.groupby(['hour'])['hour'].count()[popular_hour],1)
     # display the most common start hour 
     print('The most common start hour to travel is: {} - Count {}.'.format(popular_hour, count_popular_hour))
 
 
-    print("\nThis calculation took %s seconds." % (time.time() - start_time))
+    print("\nThis calculation took %s seconds." % (round(time.time() - start_time,2)))
     print('-'*40)
 
 
@@ -207,7 +207,7 @@ def station_stats(df,city,month,day):
     count_popular_trip = df.groupby(['trip'])['trip'].count()[popular_trip]
     print('The most common combination of start station and end station trip is:', popular_trip, '- Count: ', count_popular_trip)
 
-    print("\nThis calculation took %s seconds." % (time.time() - start_time))
+    print("\nThis calculation took %s seconds." % (round(time.time() - start_time,2)))
     print('-'*40)
 
 
@@ -238,14 +238,21 @@ def trip_duration_stats(df,city,month,day):
     df['travel time'] = df['End Time'] - df['Start Time']
 
     # display total travel time
-    total_travel_time = df['travel time'].sum()
-    print('The total travel time among users is:', total_travel_time)
+    total_travel_time_days, total_travel_time_seconds = df['travel time'].sum().days, df['travel time'].sum().seconds
+    total_travel_time_hours = total_travel_time_seconds // 3600
+    total_travel_time_mins = (total_travel_time_seconds % 3600) // 60
+    total_travel_time_secs = total_travel_time_seconds %60
+
+    print('The total travel time among users is:{} days, {} hours, {} minutes and {} seconds'.format(total_travel_time_days,total_travel_time_hours,total_travel_time_mins,total_travel_time_secs))
 
     # display mean travel time
-    mean_travel_time = df['travel time'].mean()
-    print('The mean travel time among users is:', mean_travel_time)
+    mean_travel_time_days, mean_travel_time_seconds = df['travel time'].mean().days , df['travel time'].mean().seconds
+    mean_travel_time_hours = mean_travel_time_seconds // 3600
+    mean_travel_time_mins = (mean_travel_time_seconds % 3600) // 60
+    mean_travel_time_secs = mean_travel_time_seconds %60
+    print('The mean travel time among users is: {} days, {} hours, {} minutes and {} seconds'.format(mean_travel_time_days, mean_travel_time_hours, mean_travel_time_mins, mean_travel_time_secs))
 
-    print("\nThis calculation took %s seconds." % (time.time() - start_time))
+    print("\nThis calculation took %s seconds." % (round(time.time() - start_time,2)))
     print('-'*40)
 
 
@@ -269,7 +276,7 @@ def user_stats(df,city,month,day,column_names):
     """
 
     full_count = df['User Type'].count()
-    print('\nCalculating User Statistics in {}...\n Filters: Month = {}, Day = {}\n  Full count = {}\n'.format(city.title(), month.title(), day.title(),full_count))
+    print('\nCalculating User Statistics in {}...\n Filters: Month = {}, Day = {}\nFull count = {}\n'.format(city.title(), month.title(), day.title(),full_count))
     start_time = time.time()
 
     # Display counts of user types
@@ -297,33 +304,33 @@ def user_stats(df,city,month,day,column_names):
     else:
         print('\nUnfortunately the data is incomplete and the Birth Year stats for {} cannot be completed.'.format(city.title()))
 
-    print("\nThis calculation took %s seconds." % (time.time() - start_time))
+    print("\nThis calculation took %s seconds." % (round(time.time() - start_time,2)))
     print('-'*40)
 
 def print_raw_data(df, city):
-        df_raw = pd.read_csv(CITY_DATA[city])
-        i = 0
-        while True:
-            raw = input('\nWould you like to see 5 lines of raw data? Enter yes or no.\n')
-            if raw.lower() == 'no':
-                break
-            elif raw.lower() == 'yes':
-                print(df_raw[i:i+5])
-                i += 5
-            else:
-                print('\nThat is not a valid option! Please try again.\n')   
+    df_raw = pd.read_csv(CITY_DATA[city])
+    i = 0
+    while True:
+        raw = input('\nWould you like to see 5 lines of raw data? Enter yes or no.\n')
+        if raw.lower() == 'no':
+            break
+        elif raw.lower() == 'yes':
+            print(df_raw[i:i+5])
+            i += 5
+        else:
+            print('\nThat is not a valid option! Please try again.\n')   
         
-        i = 0
-        while True:
-            raw = input('\nWould you like to see 5 lines of filtered data? Enter yes or no.\n')
-            if raw.lower() == 'no':
-                break
-            elif raw.lower() == 'yes':             
-                print(df[i:i+5])
-                i += 5
-            else:
-                print('\nThat is not a valid option! Please try again.\n')   
-    
+    i = 0
+    while True:
+        raw = input('\nWould you like to see 5 lines of filtered data? Enter yes or no.\n')
+        if raw.lower() == 'no':
+            break
+        elif raw.lower() == 'yes':             
+            print(df[i:i+5])
+            i += 5
+        else:
+            print('\nThat is not a valid option! Please try again.\n')       
+
 
 def main():
     while True:
@@ -349,7 +356,7 @@ def main():
             print('\n There are no data of trips in {} that took place on {} - {}.\n'.format(city.title(), day.title(), month.title()))
  
         print_raw_data(df,city)   
-
+        
         while True:
             restart = input('\nWould you like to restart? Enter yes or no.\n')
             if restart.lower() == 'yes' or restart.lower() == 'no':
@@ -357,8 +364,8 @@ def main():
             else:
                 print('\nThat is not a valid option! Please try again.\n')
         
-        if restart.lower() == 'no' :
-            break
+        if restart.lower() == 'no':       
+            break 
 
 if __name__ == "__main__":
 	main()
